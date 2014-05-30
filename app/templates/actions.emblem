@@ -1,0 +1,38 @@
+p Actions template
+
+p
+  | Total todos:
+  = total
+  | , remaining:
+  = remaining
+
+p
+  | This field is created with an "input" helper:
+p
+  = input placeholder="What needs to be done?" value=newTitle action="createTodo"
+
+
+p
+  | This field is created with an "input" html tag and an "action" helper:
+p
+
+  input type="text" placeholder="What needs to be done?" value=newTitle
+
+p
+  button{action "createTodo"} add
+  | See this button work fine, then comment out the "input" helper and try again.
+p (Emblem uses "/" for comments. Filename is 'app/templates/actions.emblem'.)
+
+ul
+  each
+    li class={ :action isCompleted isEditing }
+
+      if isEditing
+        view "action-edit" value=title focus-out="finishEditing" insert-newline="finishEditing"
+        button{action "finishEditing"} done
+
+      else
+        = input type="checkbox" checked=isCompleted class="toggle"
+        label doubleClick=edit {{title}}
+        button{action "edit"} edit
+        button{action "remove"} del
